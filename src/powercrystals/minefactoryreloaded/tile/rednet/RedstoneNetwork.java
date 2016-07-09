@@ -27,6 +27,7 @@ import powercrystals.minefactoryreloaded.core.IGrid;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 public class RedstoneNetwork implements IGrid {
 
@@ -366,7 +367,7 @@ public class RedstoneNetwork implements IGrid {
 		}
 
 		int power = getSingleNodePowerLevel(node, subnet);
-		log("Network with ID %d:%d calculated power for node %s as %d : %s", hashCode(), subnet, node, power);
+		log("Network with ID %d:%d calculated power for node %s as %d", hashCode(), subnet, node, power);
 		if (Math.abs(power) > Math.abs(_powerLevelOutput[subnet])) {
 			log("Network with ID %d:%d has node %s as new power provider", hashCode(), subnet, node);
 			_powerLevelOutput[subnet] = power;
@@ -501,7 +502,7 @@ public class RedstoneNetwork implements IGrid {
 			} else if (block instanceof IRedNetInputNode) {
 				((IRedNetInputNode) block).onInputChanged(_world, node.x, node.y, node.z, node.orientation.getOpposite(), _powerLevelOutput[subnet]);
 			} else {
-				MFRUtil.notifyNearbyBlocksExcept(_world, node.x, node.y, node.z, Blocks.air);
+				MFRUtil.notifyNearbyBlocksExcept(_world, node.x, node.y, node.z, MFRThings.rednetCableBlock);
 			}
 		}
 	}

@@ -287,7 +287,6 @@ public class Vanilla {
 		registerOreDictLaserOre( 20, "oreIndium", silver, null);
 		registerOreDictLaserOre( 20, "oreAmmonium", white, null);
 		registerOreDictLaserOre( 20, "oreCalcite", orange, null);
-		registerOreDictLaserOre( 20, "oreFluorite", silver, null);
 		registerOreDictLaserOre( 20, "oreMagnetite", black, null);
 		// focus also unknown
 		registerOreDictLaserOre( 20, "oreManganese", pink, null);

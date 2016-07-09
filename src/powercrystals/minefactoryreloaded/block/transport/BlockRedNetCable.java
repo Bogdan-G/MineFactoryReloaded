@@ -39,11 +39,11 @@ import powercrystals.minefactoryreloaded.tile.rednet.RedstoneNetwork;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetCable;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 
-public class BlockRedNetCable extends BlockFactory
-implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
-{
-	public static final String[] _names = {null, "glass", "energy", "energyglass"};
+public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider {
 
+	public static final String[] _names = { null, "glass", "energy", "energyglass" };
+
+	//@formatter:off
 	private static float _wireSize   =  4.0F / 16.0F;
 	private static float _cageSize   =  6.0F / 16.0F;
 	private static float _gripWidth  =  8.0F / 16.0F;
@@ -66,15 +66,16 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 
 	private static float _bandDepthStart = _bandOffset;
 	private static float _bandDepthEnd   = _bandOffset + _bandDepth;
+	//@formatter:on
 
 	public static int[] _subSideMappings = new int[] { 6, 6,
-		0, 1, 2, 3, 4, 5, // 6[0]
-		0, 1, 2, 3, 4, 5, // 6[1]
-		0, 1, 2, 3, 4, 5, // 6[2]
-		0, 1, 2, 3, 4, 5, // 6[3]
-		0, 1, 2, 3, 4, 5, // 6[4]
-		0, 1, 2, 3, 4, 5, // 6[5]
-		7, 8, 9, 10, 11, 12 };
+			0, 1, 2, 3, 4, 5, // 6[0]
+			0, 1, 2, 3, 4, 5, // 6[1]
+			0, 1, 2, 3, 4, 5, // 6[2]
+			0, 1, 2, 3, 4, 5, // 6[3]
+			0, 1, 2, 3, 4, 5, // 6[4]
+			0, 1, 2, 3, 4, 5, // 6[5]
+			7, 8, 9, 10, 11, 12 };
 
 	public static Cuboid6[] subSelection = new Cuboid6[2 + 6 * 6];
 
@@ -134,24 +135,23 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 		subSelection[i++] = new Cuboid6(_cageEnd, _cageStart, _cageStart, 1 - 0, _cageEnd, _cageEnd);
 	}
 
-	public BlockRedNetCable()
-	{
+	public BlockRedNetCable() {
+
 		super(0.8F);
 		setBlockName("mfr.cable.redstone");
 		providesPower = true;
 	}
 
 	@Override
-	public boolean activated(World world, int x, int y, int z, EntityPlayer player, int side)
-	{
+	public boolean activated(World world, int x, int y, int z, EntityPlayer player, int side) {
+
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te instanceof TileEntityRedNetCable)
-		{
-			TileEntityRedNetCable cable = (TileEntityRedNetCable)te;
+		if (te instanceof TileEntityRedNetCable) {
+			TileEntityRedNetCable cable = (TileEntityRedNetCable) te;
 
 			harvesters.set(player);
 			MovingObjectPosition part = collisionRayTrace(world, x, y, z,
-					RayTracer.getStartVec(player), RayTracer.getEndVec(player));
+				RayTracer.getStartVec(player), RayTracer.getEndVec(player));
 			harvesters.set(null);
 			if (part == null)
 				return false;
@@ -165,48 +165,32 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 
 			ItemStack s = player.inventory.getCurrentItem();
 
-			if (cable.onPartHit(player, side, subHit))
-			{
+			if (cable.onPartHit(player, side, subHit)) {
 				;
-			}
-			else if (subHit >= (2 + 6 * 2) && subHit < (2 + 6 * 3))
-			{
-				if (MFRUtil.isHoldingUsableTool(player, x, y, z))
-				{
-					if (!world.isRemote)
-					{
+			} else if (subHit >= (2 + 6 * 2) && subHit < (2 + 6 * 3)) {
+				if (MFRUtil.isHoldingUsableTool(player, x, y, z)) {
+					if (!world.isRemote) {
 						int nextColor;
-						if(!player.isSneaking())
-						{
+						if (!player.isSneaking()) {
 							nextColor = cable.getSideColor(ForgeDirection.getOrientation(side)) + 1;
-							if(nextColor > 15) nextColor = 0;
-						}
-						else
-						{
+							if (nextColor > 15) nextColor = 0;
+						} else {
 							nextColor = cable.getSideColor(ForgeDirection.getOrientation(side)) - 1;
-							if(nextColor < 0) nextColor = 15;
+							if (nextColor < 0) nextColor = 15;
 						}
 						cable.setSideColor(ForgeDirection.getOrientation(side), nextColor);
 						return true;
 					}
-				}
-				else if (s != null && s.getItem().equals(Items.dye))
-				{
-					if (!world.isRemote)
-					{
+				} else if (s != null && s.getItem().equals(Items.dye)) {
+					if (!world.isRemote) {
 						cable.setSideColor(ForgeDirection.getOrientation(side), 15 - s.getItemDamage());
 						return true;
 					}
 				}
-			}
-			else if (subHit >= 0 && subHit < (2 + 6 * 2) || subHit >= (2 + 6 * 5))
-			{
-				l: if (MFRUtil.isHoldingUsableTool(player, x, y, z))
-				{
-					if (!world.isRemote)
-					{
-						if (side > 6)
-						{
+			} else if (subHit >= 0 && subHit < (2 + 6 * 2) || subHit >= (2 + 6 * 5)) {
+				l: if (MFRUtil.isHoldingUsableTool(player, x, y, z)) {
+					if (!world.isRemote) {
+						if (side > 6) {
 							ForgeDirection dir = ForgeDirection.getOrientation(side - 7);
 							TileEntityRedNetCable cable2 = new BlockPosition(x, y, z).step(dir).getTileEntity(world, TileEntityRedNetCable.class);
 							cable.toggleSide(side - 7);
@@ -221,13 +205,11 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 
 						byte mode = cable.getMode(side);
 						mode++;
-						if (side == 6)
-						{
+						if (side == 6) {
 							if (mode > 1)
 								mode = 0;
 							cable.setMode(side, mode);
-							switch (mode)
-							{
+							switch (mode) {
 							case 0:
 								player.addChatMessage(new ChatComponentTranslation("chat.info.mfr.rednet.tile.standard"));
 								break;
@@ -238,13 +220,11 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 							}
 							break l;
 						}
-						if (mode > 3)
-						{
+						if (mode > 3) {
 							mode = 0;
 						}
 						cable.setMode(side, mode);
-						switch (mode)
-						{
+						switch (mode) {
 						case 0:
 							player.addChatMessage(new ChatComponentTranslation("chat.info.mfr.rednet.connection.standard"));
 							break;
@@ -261,11 +241,8 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 						}
 					}
 					MFRUtil.usedWrench(player, x, y, z);
-				}
-				else if (s != null && s.getItem().equals(Items.dye))
-				{
-					if (!world.isRemote)
-					{
+				} else if (s != null && s.getItem().equals(Items.dye)) {
+					if (!world.isRemote) {
 						cable.setSideColor(ForgeDirection.getOrientation(side), 15 - s.getItemDamage());
 						world.markBlockForUpdate(x, y, z);
 						return true;
@@ -277,40 +254,41 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
+	public boolean isOpaqueCube() {
+
 		return false;
 	}
 
 	@Override
-	public boolean renderAsNormalBlock()
-	{
+	public boolean renderAsNormalBlock() {
+
 		return false;
 	}
 
 	@Override
 	public void onPostBlockPlaced(World world, int x, int y, int z, int metadata) {
+
 		if (MFRConfig.defaultRedNetCableOnly.getBoolean(false)) {
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TileEntityRedNetCable) {
-				TileEntityRedNetCable cable = (TileEntityRedNetCable)te;
+				TileEntityRedNetCable cable = (TileEntityRedNetCable) te;
 				cable.setMode(6, (byte) 1);
 			}
 		}
 	}
 
 	@Override
-	public void breakBlock(World world, int X, int Y, int Z, Block id, int meta)
-	{
-		super.breakBlock(world, X, Y, Z, id, meta);
-		MFRUtil.wideNotifyNearbyBlocksExcept(world, X, Y, Z, id);
+	public void breakBlock(World world, int x, int y, int z, Block id, int meta) {
+
+		super.breakBlock(world, x, y, z, id, meta);
+		MFRUtil.wideNotifyNearbyBlocksExcept(world, x, y, z, id);
 	}
 
 	@Override
-	public boolean canDismantle(EntityPlayer player, World world, int x, int y, int z)
-	{
+	public boolean canDismantle(EntityPlayer player, World world, int x, int y, int z) {
+
 		MovingObjectPosition part = collisionRayTrace(world, x, y, z,
-				RayTracer.getStartVec(player), RayTracer.getEndVec(player));
+			RayTracer.getStartVec(player), RayTracer.getEndVec(player));
 		if (part == null)
 			return false;
 		int subHit = part.subHit;
@@ -318,44 +296,41 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 	}
 
 	@Override
-	public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side)
-	{
+	public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
+
 		int power = 0;
 		TileEntity te = world.getTileEntity(x, y, z);
-		if(te instanceof TileEntityRedNetCable)
-		{
-			power = ((TileEntityRedNetCable)te).getWeakPower(ForgeDirection.getOrientation(side).getOpposite());
+		if (te instanceof TileEntityRedNetCable) {
+			power = ((TileEntityRedNetCable) te).getWeakPower(ForgeDirection.getOrientation(side).getOpposite());
 		}
 		return power;
 	}
 
 	@Override
-	public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side)
-	{
+	public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side) {
+
 		int power = 0;
 		TileEntity te = world.getTileEntity(x, y, z);
-		if(te instanceof TileEntityRedNetCable)
-		{
-			power = ((TileEntityRedNetCable)te).getStrongPower(ForgeDirection.getOrientation(side).getOpposite());
+		if (te instanceof TileEntityRedNetCable) {
+			power = ((TileEntityRedNetCable) te).getStrongPower(ForgeDirection.getOrientation(side).getOpposite());
 		}
 		return power;
 	}
 
 	@Override
-	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side)
-	{
+	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityRedNetCable)
-			return ((TileEntityRedNetCable)te).isSolidOnSide(side.ordinal());
+			return ((TileEntityRedNetCable) te).isSolidOnSide(side.ordinal());
 
 		return false;
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta)
-	{
-		switch (meta)
-		{
+	public TileEntity createNewTileEntity(World world, int meta) {
+
+		switch (meta) {
 		default:
 		case 0:
 			return new TileEntityRedNetCable();
@@ -365,100 +340,87 @@ implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, ITileEntityProvider
 	}
 
 	@Override
-	public int getRenderType()
-	{
+	public int getRenderType() {
+
 		return renderIdRedNet;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister ir)
-	{
+	public void registerBlockIcons(IIconRegister ir) {
+
 		blockIcon = ir.registerIcon("minefactoryreloaded:" + getUnlocalizedName());
 		RedNetCableRenderer.updateUVT(blockIcon);
 	}
 
 	@Override
-	public void updateNetwork(World world, int x, int y, int z, ForgeDirection from)
-	{
+	public void updateNetwork(World world, int x, int y, int z, ForgeDirection from) {
+
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te instanceof TileEntityRedNetCable)
-		{
-			((TileEntityRedNetCable)te).updateNearbyNode(from);
+		if (te instanceof TileEntityRedNetCable) {
+			((TileEntityRedNetCable) te).updateNearbyNode(from);
 		}
 	}
 
 	@Override
-	public void updateNetwork(World world, int x, int y, int z, int subnet, ForgeDirection from)
-	{
+	public void updateNetwork(World world, int x, int y, int z, int subnet, ForgeDirection from) {
+
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te instanceof TileEntityRedNetCable)
-		{
-			((TileEntityRedNetCable)te).updateNearbyNode(subnet, from);
+		if (te instanceof TileEntityRedNetCable) {
+			((TileEntityRedNetCable) te).updateNearbyNode(subnet, from);
 		}
 	}
 
 	@Override
-	public RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side)
-	{
+	public RedNetConnectionType getConnectionType(World world, int x, int y, int z, ForgeDirection side) {
+
 		return RedNetConnectionType.CableAll;
 	}
 
 	@Override
-	public void getBlockInfo(IBlockAccess world, int x, int y, int z, ForgeDirection side,
-			EntityPlayer player, List<IChatComponent> info, boolean debug)
-	{
+	public void getBlockInfo(IBlockAccess world, int x, int y, int z, ForgeDirection side, EntityPlayer player, List<IChatComponent> info, boolean debug) {
+
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileEntityRedNetCable)
-		{
-			MovingObjectPosition part = collisionRayTrace(world, x, y, z,
-					RayTracer.getStartVec(player), RayTracer.getEndVec(player));
+		if (tile instanceof TileEntityRedNetCable) {
+			MovingObjectPosition part = collisionRayTrace(world, x, y, z, RayTracer.getStartVec(player), RayTracer.getEndVec(player));
 			if (part == null)
 				return;
 
 			int subHit = part.subHit;
 			side = ForgeDirection.getOrientation(_subSideMappings[subHit]);
-			((TileEntityRedNetCable)tile).getTileInfo(info, side, player, debug);
+			((TileEntityRedNetCable) tile).getTileInfo(info, side, player, debug);
 		}
 	}
 
 	@Override
-	public void getRedNetInfo(IBlockAccess world, int x, int y, int z, ForgeDirection side,
-			EntityPlayer player, List<IChatComponent> info) {
+	public void getRedNetInfo(IBlockAccess world, int x, int y, int z, ForgeDirection side, EntityPlayer player, List<IChatComponent> info) {
+
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileEntityRedNetCable)
-		{
-			MovingObjectPosition part = collisionRayTrace(world, x, y, z,
-					RayTracer.getStartVec(player), RayTracer.getEndVec(player));
+		if (tile instanceof TileEntityRedNetCable) {
+			MovingObjectPosition part = collisionRayTrace(world, x, y, z, RayTracer.getStartVec(player), RayTracer.getEndVec(player));
 			if (part == null)
 				return;
 
 			int subHit = part.subHit;
 			side = ForgeDirection.getOrientation(_subSideMappings[subHit]);
-			info.add(new ChatComponentText(((TileEntityRedNetCable)tile).getRedNetInfo(side, player)));
+			info.add(new ChatComponentText(((TileEntityRedNetCable) tile).getRedNetInfo(side, player)));
 
 			int value;
 			int foundNonZero = 0;
-			RedstoneNetwork _network = ((TileEntityRedNetCable)tile).getNetwork();
-			for (int i = 0; i < 16; i++)
-			{
+			RedstoneNetwork _network = ((TileEntityRedNetCable) tile).getNetwork();
+			for (int i = 0; i < 16; i++) {
 				value = _network.getPowerLevelOutput(i);
 
-				if (value != 0)
-				{
+				if (value != 0) {
 					// TODO: localize color names v
-					info.add(new ChatComponentText(ItemRedNetMeter._colorNames[i]).
-							appendText(": " + value));
+					info.add(new ChatComponentText(ItemRedNetMeter._colorNames[i]).appendText(": " + value));
 					++foundNonZero;
 				}
 			}
 
-			if (foundNonZero == 0)
-			{
+			if (foundNonZero == 0) {
 				info.add(new ChatComponentTranslation("chat.info.mfr.rednet.meter.cable.allzero"));
-			}
-			else if (foundNonZero < 16)
-			{
+			} else if (foundNonZero < 16) {
 				info.add(new ChatComponentTranslation("chat.info.mfr.rednet.meter.cable.restzero"));
 			}
 		}

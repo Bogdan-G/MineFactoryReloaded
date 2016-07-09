@@ -110,8 +110,10 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 
 	private void removeFromGrid() {
 
-		_network.removeConduit(this);
 		markForRegen();
+		for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS)
+			_network.removeNode(new BlockPosition(xCoord, yCoord, zCoord, d).step(d));
+		_network.removeConduit(this);
 		_network = null;
 	}
 
