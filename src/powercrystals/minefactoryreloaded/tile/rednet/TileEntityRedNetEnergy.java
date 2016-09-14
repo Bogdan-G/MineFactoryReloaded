@@ -8,9 +8,9 @@ import appeng.api.implementations.tiles.ICrankable;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import cofh.api.energy.IEnergyTransport;
 import cofh.asm.relauncher.Strippable;
 import cofh.lib.util.position.BlockPosition;
 import cofh.repack.codechicken.lib.raytracer.IndexedCuboid6;
@@ -42,7 +42,7 @@ import powercrystals.minefactoryreloaded.net.Packets;
 
 @Strippable("appeng.api.implementations.tiles.ICrankable")
 public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
-																	IEnergyHandler, ICrankable//, IEnergyInfo
+																	IEnergyTransport, ICrankable//, IEnergyInfo
 {
 
 	private static boolean IC2Classes = false, IC2Net = false;
@@ -59,6 +59,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 	}
 
 	private byte[] sideMode = { 1, 1, 1, 1, 1, 1, 0 };
+	private InterfaceType[] transportTypes = null;
 	private IEnergyReceiver[] receiverCache = null;
 	private IEnergyProvider[] providerCache = null;
 	private IC2Cache ic2Cache = null;
@@ -229,7 +230,20 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 			}
 		} else if (tile instanceof IEnergyConnection) {
 			if (((IEnergyConnection) tile).canConnectEnergy(ForgeDirection.VALID_DIRECTIONS[side])) {
-				sideMode[side] |= 1 << 1;
+				if (tile instanceof IEnergyTransport) {
+					IEnergyTransport transport = (IEnergyTransport) tile;
+					InterfaceType type = transport.getTransportState(ForgeDirection.getOrientation(side)).getOpposite();
+					if (type != InterfaceType.BALANCE) {
+						createTransportTypes();
+						transportTypes[side] = type;
+					}
+					sideMode[side] |= 2 << 1;
+				} else {
+					sideMode[side] |= 1 << 1;
+					if (transportTypes != null) {
+						transportTypes[side] = InterfaceType.BALANCE;
+					}
+				}
 				if (tile instanceof IEnergyReceiver) {
 					if (receiverCache == null) receiverCache = new IEnergyReceiver[6];
 					receiverCache[side] = (IEnergyReceiver) tile;
@@ -247,6 +261,14 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 				RedstoneEnergyNetwork.HANDLER.addConduitForUpdate(this);
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
+		}
+	}
+
+	private void createTransportTypes() {
+
+		transportTypes = new InterfaceType[6];
+		for (int i = transportTypes.length; i-- > 0; ) {
+			transportTypes[i] = InterfaceType.BALANCE;
 		}
 	}
 
@@ -347,6 +369,28 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 		return 0;
 	}
 
+	@Override
+	public InterfaceType getTransportState(ForgeDirection from) {
+
+		if (transportTypes != null) {
+			return transportTypes[from.ordinal() ^ 1];
+		}
+		return InterfaceType.BALANCE;
+	}
+
+	@Override
+	public boolean setTransportState(InterfaceType state, ForgeDirection from) {
+
+		if ((sideMode[from.ordinal() ^ 1] >> 1) == 1 || !isInterfacing(from)) {
+			return false;
+		}
+		if (transportTypes == null) {
+			createTransportTypes();
+		}
+		transportTypes[from.ordinal() ^ 1] = state;
+		return true;
+	}
+
 	// ICrankable
 
 	@Override
@@ -426,8 +470,18 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 					}
 				}
 				break;
-			case 2: // unused
+			case 2: {// IEnergyTransport
+				InterfaceType state = getTransportState(side);
+				if (providerCache != null && state == InterfaceType.RECEIVE) {
+					IEnergyProvider handlerTile = providerCache[bSide];
+					if (handlerTile != null) {
+						int e = handlerTile.extractEnergy(side, TRANSFER_RATE, true);
+						if (e > 0)
+							handlerTile.extractEnergy(side, storage.receiveEnergy(e, false), false);
+					}
+				}
 				break;
+			}
 			case 3: // IEnergyTile
 				if (ic2Cache != null)
 					ic2Cache.extract(bSide);
@@ -453,8 +507,15 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 						return handlerTile.receiveEnergy(side, energy, false);
 				}
 				break;
-			case 2: // unused
+			case 2: {// IEnergyTransport
+				InterfaceType state = getTransportState(side);
+				if (receiverCache != null && state != InterfaceType.RECEIVE) {
+					IEnergyReceiver handlerTile = receiverCache[bSide];
+					if (handlerTile != null && (state == InterfaceType.SEND || handlerTile.getEnergyStored(side) < _grid.storage.getEnergyStored()))
+						return handlerTile.receiveEnergy(side, energy, false);
+				}
 				break;
+			}
 			case 3: // IEnergyTile
 				if (ic2Cache != null)
 					return ic2Cache.transmit(energy, side, bSide);
@@ -654,8 +715,10 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 					list.add((IndexedCuboid6) new IndexedCuboid6(o, subSelection[o]).add(offset));
 				iface = false;
 			} else if (forTrace & hasTool & _cableMode[6] != 1 && (c = getConnectionState(side[i], false)).isConnected) { // cable-only
-				if (!iface & c.isAllSubnets & c.isCable) {
-					k += 6 * 3;
+				if (c.isAllSubnets & c.isCable) {
+					if (!iface) {
+						k += 6 * 3;
+					}
 					o += 6 * 6;
 				}
 				list.add((IndexedCuboid6) new IndexedCuboid6(o, subSelection[k]).add(offset)); // connection point (raytrace)

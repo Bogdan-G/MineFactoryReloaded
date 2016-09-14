@@ -341,7 +341,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	@Override
 	public void setStoredItemType(ItemStack type, int amount) {
 
-		if (isActive())
+		if (_storedItem != null && isActive() && !UtilInventory.stacksEqual(type, _storedItem))
 			return;
 		clearSlots();
 		_storedQuantity = amount;

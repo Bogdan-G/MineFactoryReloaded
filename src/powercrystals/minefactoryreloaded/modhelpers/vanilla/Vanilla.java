@@ -274,6 +274,7 @@ public class Vanilla {
 		registerOreDictLaserOre( 20, "oreFirestone",         red, null);
 		registerOreDictLaserOre( 20, "MonazitOre",         green, null);
 		registerOreDictLaserOre( 15, "Cinnabar",             red,  true);
+		registerOreDictLaserOre( 15, "Adamantine",           red, false);
 		registerOreDictLaserOre( 15, "Platinum",       lightBlue, false);
 		registerOreDictLaserOre( 15, "oreCooperite",      yellow, "oreNetherPlatinum", lightBlue);
 		registerOreDictLaserOre( 10, "oreArdite",         orange, null);
