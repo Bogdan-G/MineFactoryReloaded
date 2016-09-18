@@ -39,7 +39,7 @@ import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic.PinMa
 
 public class GuiRedNetLogic extends GuiBase {
 
-	private class CircuitComparator implements Comparator<IRedNetLogicCircuit> {
+	private static class CircuitComparator implements Comparator<IRedNetLogicCircuit> {
 
 		@Override
 		public int compare(IRedNetLogicCircuit arg0, IRedNetLogicCircuit arg1) {

@@ -44,12 +44,12 @@ public class WorldGenLakesMeta extends WorldGenerator
 			
 			for(i1 = 0; i1 < l; ++i1)
 			{
-				double d0 = random.nextDouble() * 6.0D + 3.0D;
-				double d1 = random.nextDouble() * 4.0D + 2.0D;
-				double d2 = random.nextDouble() * 6.0D + 3.0D;
-				double d3 = random.nextDouble() * (16.0D - d0 - 2.0D) + 1.0D + d0 / 2.0D;
-				double d4 = random.nextDouble() * (8.0D - d1 - 4.0D) + 2.0D + d1 / 2.0D;
-				double d5 = random.nextDouble() * (16.0D - d2 - 2.0D) + 1.0D + d2 / 2.0D;
+				float d0 = random.nextFloat() * 6.0F + 3.0F;
+				float d1 = random.nextFloat() * 4.0F + 2.0F;
+				float d2 = random.nextFloat() * 6.0F + 3.0F;
+				float d3 = random.nextFloat() * (16.0F - d0 - 2.0F) + 1.0F + d0 / 2.0F;
+				float d4 = random.nextFloat() * (8.0F - d1 - 4.0F) + 2.0F + d1 / 2.0F;
+				float d5 = random.nextFloat() * (16.0F - d2 - 2.0F) + 1.0F + d2 / 2.0F;
 				
 				for(int j1 = 1; j1 < 15; ++j1)
 				{
@@ -57,12 +57,12 @@ public class WorldGenLakesMeta extends WorldGenerator
 					{
 						for(int l1 = 1; l1 < 7; ++l1)
 						{
-							double d6 = (j1 - d3) / (d0 / 2.0D);
-							double d7 = (l1 - d4) / (d1 / 2.0D);
-							double d8 = (k1 - d5) / (d2 / 2.0D);
-							double d9 = d6 * d6 + d7 * d7 + d8 * d8;
+							float d6 = (j1 - d3) / (d0 / 2.0F);
+							float d7 = (l1 - d4) / (d1 / 2.0F);
+							float d8 = (k1 - d5) / (d2 / 2.0F);
+							float d9 = d6 * d6 + d7 * d7 + d8 * d8;
 							
-							if(d9 < 1.0D)
+							if(d9 < 1.0F)
 							{
 								aboolean[(j1 * 16 + k1) * 8 + l1] = true;
 							}

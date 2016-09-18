@@ -27,7 +27,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	private static final byte[] otherCoordPairs = new byte[] { (byte) 2, (byte) 0, (byte) 0, (byte) 1, (byte) 2, (byte) 1 };
 	private static final float PI = (float) Math.PI;
 
-	private Random rand = new Random();
+	private Random rand = new org.bogdang.modifications.random.XSTR();
 
 	/** Running variables */
 	private World worldObj;
@@ -129,15 +129,16 @@ public class WorldGenMassiveTree extends WorldGenerator {
 			if (var8 > 0.0F)
 				for (float var9 = 0.5f; var7 < var1; ++var7) {
 					float var11 = scaleWidth * var8 * (rand.nextFloat() + 0.328f);
-					float var13 = rand.nextFloat() * 2.0f * PI;
-					int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + basePos[0] + var9);
-					int var16 = MathHelper.floor_double(var11 * Math.cos(var13) + basePos[2] + var9);
+					//float var13 = rand.nextFloat() * 2.0f * PI;
+					float msin = (float)Math.sin(rand.nextFloat() * 2.0f * PI);
+					int var15 = MathHelper.floor_float(var11 * msin + basePos[0] + var9);
+					int var16 = MathHelper.floor_float(var11 * (float)Math.sqrt(1 - msin) + basePos[2] + var9);
 					int[] var17 = new int[] { var15, var3, var16 };
 					int[] var18 = new int[] { var15, var3 + leafDistanceLimit, var16 };
 
 					if (this.checkBlockLine(var17, var18) == -1) {
 						int t;
-						double var20 = Math.sqrt((t = basePos[0] - var17[0]) * t + (t = basePos[2] - var17[2]) * t);
+						float var20 = (float)Math.sqrt((t = basePos[0] - var17[0]) * t + (t = basePos[2] - var17[2]) * t);
 						int var22 = (int) (var20 * branchSlope);
 
 						int[] var19 = new int[] { basePos[0], Math.min(var17[1] - var22, var5), basePos[2] };
@@ -311,11 +312,11 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 	private static final int sinc2(final double x, final double z, final int y) {
 
-		final double pi = Math.PI, pi2 = pi / 1.5;
+		//final double pi = Math.PI, pi2 = pi / 1.5;
 		double r;
-		r = Math.sqrt((r = (x / pi)) * r + (r = (z / pi)) * r) * pi / 180;
+		r = Math.sqrt((r = (x / Math.PI)) * r + (r = (z / Math.PI)) * r) * Math.PI / 180;
 		if (r == 0) return y;
-		return (int) Math.round(y * (((Math.sin(r) / r) + (Math.sin(r * pi2) / (r * pi2))) / 2));
+		return (int) Math.round(y * (((Math.sin(r) / r) + (Math.sin(r * Math.PI/2) / (r * Math.PI/2))) / 2));
 	}
 
 	/**
@@ -524,10 +525,8 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		basePos[0] = x;
 		basePos[1] = y;
 		basePos[2] = z;
-		if (heightLimit == 0)
-			heightLimit = heightLimitLimit;
-		if (minHeight == -1)
-			minHeight = 80;
+		if (heightLimit == 0) heightLimit = heightLimitLimit;
+		if (minHeight == -1) minHeight = 80;
 
 		if (!this.validTreeLocation())
 			return false;
@@ -567,8 +566,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	@Override
 	public void setBlockAndNotifyAdequately(World world, int x, int y, int z, Block block, int meta) {
 
-		if ((y < 0) | y > 255)
-			return;
+		if ((y < 0) | y > 255) return;
 		//++blocksAdded;
 		long pos = ((x & 0xFFFFFFF0L) << 32) | (z & 0xFFFFFFF0L);
 

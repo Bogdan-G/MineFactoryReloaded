@@ -49,7 +49,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 
 		super.cofh_validate();
 		if (_rand == null) {
-			_rand = new Random(worldObj.getSeed() ^ worldObj.rand.nextLong());
+			_rand = new org.bogdang.modifications.random.XSTR(worldObj.getSeed() ^ worldObj.rand.nextLong());
 			_next = _rand.nextFloat();
 		}
 		validateLocation();
@@ -193,7 +193,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		if (tag.hasKey("jam"))
 			_isJammed = tag.getBoolean("jam");
 		if (tag.hasKey("seed"))
-			_rand = new Random(tag.getLong("seed"));
+			_rand = new org.bogdang.modifications.random.XSTR(tag.getLong("seed"));
 		if (tag.hasKey("next"))
 			_next = tag.getFloat("next");
 	}

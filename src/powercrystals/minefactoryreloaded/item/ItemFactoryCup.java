@@ -183,9 +183,9 @@ public class ItemFactoryCup extends ItemFactory implements IAdvFluidContainerIte
 				drainAmount = tag.getInteger("toDrain");
 				tag.removeTag("toDrain");
 			} else
-				drainAmount *= (Math.max(Math.random() - 0.75, 0) + 0.75);
+				drainAmount *= (Math.max((new org.bogdang.modifications.random.XSTR()).nextFloat() - 0.75, 0) + 0.75);
 		} else {
-			drainAmount *= (Math.max(Math.random() - 0.75, 0) + 0.75);
+			drainAmount *= (Math.max((new org.bogdang.modifications.random.XSTR()).nextFloat() - 0.75, 0) + 0.75);
 			tag.setInteger("toDrain", drainAmount);
 		}
 		fluid.amount = drainAmount;

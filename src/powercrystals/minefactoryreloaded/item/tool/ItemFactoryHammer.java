@@ -143,7 +143,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 			player.playSound("random.break", 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
 
 			for (int i = 0, e = 10 + rnd.nextInt(5); i < e; ++i) {
-				Vec3 vec3 = Vec3.createVectorHelper((rnd.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
+				Vec3 vec3 = Vec3.createVectorHelper((rnd.nextFloat() - 0.5D) * 0.1D, (new org.bogdang.modifications.random.XSTR()).nextFloat() * 0.1D + 0.1D, 0.0D);
 				vec3.rotateAroundX(-player.rotationPitch * (float) Math.PI / 180.0F);
 				vec3.rotateAroundY(-player.rotationYaw * (float) Math.PI / 180.0F);
 				Vec3 vec31 = Vec3.createVectorHelper((rnd.nextFloat() - 0.5D) * 0.3D, rnd.nextFloat(), 0.6D);

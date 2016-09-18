@@ -17,7 +17,7 @@ public class DrinkHandlerLava implements ILiquidDrinkHandler
 		tag.setLong("drankLavaTime", player.worldObj.getTotalWorldTime());
 	}
 	
-	protected class InternalLavaDamage extends DamageSource
+	protected static class InternalLavaDamage extends DamageSource
 	{
 		public InternalLavaDamage()
 		{

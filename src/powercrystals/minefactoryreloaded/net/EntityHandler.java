@@ -17,25 +17,20 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 public class EntityHandler {
 
-	@SubscribeEvent
-	public void onEntityJoinWorldEvent(EntityJoinWorldEvent evt) {
+	//@//SubscribeEvent
+	/*public void onEntityJoinWorldEvent(EntityJoinWorldEvent evt) {
 
 		if (evt.world.isRemote || !(evt.entity instanceof EntitySkeleton))
-			return;
-	}
+			return;//dead or incomplete code ?
+	}*/
 
 	@SubscribeEvent
 	public void onMinecartInteract(MinecartInteractEvent e) {
 
-		if (e.player.worldObj.isRemote)
-			return;
-		if (!MFRConfig.enableSpawnerCarts.getBoolean(true))
-			return;
+		if (e.player.worldObj.isRemote || !MFRConfig.enableSpawnerCarts.getBoolean(true)) return;
 		if (e.minecart != null && !e.minecart.isDead) {
 			ItemStack item = e.player.getCurrentEquippedItem();
-			if (item != null && item.getItem().equals(portaSpawnerItem) &
-					e.minecart.ridingEntity == null &
-					e.minecart.riddenByEntity == null) {
+			if (item != null && item.getItem().equals(portaSpawnerItem) && e.minecart.ridingEntity == null && e.minecart.riddenByEntity == null) {
 				if (e.minecart.getMinecartType() == 0) {
 					if (ItemPortaSpawner.hasData(item)) {
 						e.setCanceled(true);
@@ -50,9 +45,9 @@ public class EntityHandler {
 							(int) ent.posX, (int) ent.posY, (int) ent.posZ, 0);
 					}
 				}
-				else if (e.minecart.getMinecartType() == 4) {
-					// maybe
-				}
+				//else if (e.minecart.getMinecartType() == 4) {
+					// maybe //dead code?
+				//}
 			}
 		}
 	}

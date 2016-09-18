@@ -39,7 +39,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 				generate(world, random, x, y, z);
 	}
 
-	private final String name = "MFR:WorldGen";
+	private static final String name = "MFR:WorldGen";
 
 	@Override
 	public String getFeatureName() {
@@ -64,12 +64,11 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		int z = chunkZ * 16 + random.nextInt(16);
 
 		BiomeGenBase b = world.getBiomeGenForCoords(x, z);
-		if (b == null)
-			return false;
+		if (b == null) return false;
 
 		String biomeName = b.biomeName;
 
-		if (_rubberTreesEnabled & (newGen | _regenTrees))
+		if (_rubberTreesEnabled && (newGen || _regenTrees))//then only boolean's?
 		{
 			if (_rubberTreeBiomeList.contains(biomeName))
 			{
@@ -80,10 +79,13 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 						String ln = biomeName.toLowerCase(Locale.US);
 						if (ln.contains("mega"))
 							generateMegaRubberTree(world, random, x, world.getHeightValue(x, z), z, false);
-						else if (ln.contains("sacred") && random.nextInt(20) == 0)
+						else if (random.nextInt(20) == 0 && ln.contains("sacred"))
 							generateSacredSpringRubberTree(world, random, x, world.getHeightValue(x, z), z);
 					}
-					new WorldGenRubberTree(false).generate(world, random, x, random.nextInt(3) + 4, z);
+					if (random.nextInt(50) == 0)//reduce gen
+					{
+						new WorldGenRubberTree(false).generate(world, random, x, random.nextInt(3) + 4, z);
+					}
 				}
 			}
 		}
@@ -91,9 +93,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		if (_lakesEnabled && world.provider.canRespawnHere())
 		{
 			int rarity = _sludgeLakeRarity;
-			if (rarity > 0 & (newGen | _regenSludge) &&
-					_sludgeBiomeList.contains(biomeName) == _sludgeLakeMode &&
-					random.nextInt(rarity) == 0)
+			if (rarity > 0 && (newGen || _regenSludge) && _sludgeBiomeList.contains(biomeName) == _sludgeLakeMode && random.nextInt(rarity) == 0)
 			{
 				int lakeX = x - 8 + random.nextInt(16);
 				int lakeY = random.nextInt(world.getActualHeight());
@@ -102,9 +102,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 			}
 
 			rarity = _sewageLakeRarity;
-			if (rarity > 0 & (newGen | _regenSewage) &&
-					_sewageBiomeList.contains(biomeName) == _sewageLakeMode &&
-					random.nextInt(rarity) == 0)
+			if (rarity > 0 && (newGen || _regenSewage) && _sewageBiomeList.contains(biomeName) == _sewageLakeMode && random.nextInt(rarity) == 0)
 			{
 				int lakeX = x - 8 + random.nextInt(16);
 				int lakeY = random.nextInt(world.getActualHeight());

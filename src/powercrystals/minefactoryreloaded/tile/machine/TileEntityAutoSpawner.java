@@ -187,9 +187,9 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered implements I
 
 			EntityLivingBase spawnedLiving = (EntityLivingBase) spawnedEntity;
 
-			double x = xCoord + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
+			double x = xCoord + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * _spawnRange;
 			double y = yCoord + worldObj.rand.nextInt(3) - 1;
-			double z = zCoord + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
+			double z = zCoord + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * _spawnRange;
 
 			spawnedLiving.setLocationAndAngles(x, y, z, worldObj.rand.nextFloat() * 360.0F, 0.0F);
 

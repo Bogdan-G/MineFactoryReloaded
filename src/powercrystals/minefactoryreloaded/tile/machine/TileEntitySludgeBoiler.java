@@ -42,7 +42,7 @@ public class TileEntitySludgeBoiler extends TileEntityFactoryPowered implements 
 		super(Machine.SludgeBoiler);
 		setManageSolids(true);
 		_activeSyncTimeout = 5;
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		_tanks[0].setLock(FluidRegistry.getFluid("sludge"));
 	}
 

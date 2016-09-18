@@ -57,7 +57,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 	public TileEntityLaserDrill() {
 
 		super(Machine.LaserDrill);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		setManageSolids(true);
 	}
 

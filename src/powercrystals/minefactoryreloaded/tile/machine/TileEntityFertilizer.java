@@ -31,7 +31,7 @@ public class TileEntityFertilizer extends TileEntityFactoryPowered {
 	public TileEntityFertilizer() {
 
 		super(Machine.Fertilizer);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		createHAM(this, 1);
 		setManageSolids(true);
 		setCanRotate(true);

@@ -141,7 +141,7 @@ public class ItemSafariNet extends ItemFactory {
 		return 3;
 	}
 
-	private Random colorRand = new Random();
+	private Random colorRand = new org.bogdang.modifications.random.XSTR();
 
 	@SideOnly(Side.CLIENT)
 	@Override

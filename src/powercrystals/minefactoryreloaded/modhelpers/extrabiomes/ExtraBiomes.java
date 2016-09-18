@@ -75,23 +75,23 @@ public class ExtraBiomes {
 			MFRRegistry.registerSludgeDrop(15, new ItemStack((Integer)xbbs.getMethod("getID").invoke(xbbs.getField("CRACKEDSAND").get(null)), 1, 0));
 			//*/
 
-			MFRRegistry.registerRubberTreeBiome("Autumn Woods");
-			MFRRegistry.registerRubberTreeBiome("Birch Forest");
+			//MFRRegistry.registerRubberTreeBiome("Autumn Woods");
+			//MFRRegistry.registerRubberTreeBiome("Birch Forest");
 			MFRRegistry.registerRubberTreeBiome("Extreme Jungle");
-			MFRRegistry.registerRubberTreeBiome("Forested Hills");
+			//MFRRegistry.registerRubberTreeBiome("Forested Hills");
 			MFRRegistry.registerRubberTreeBiome("Forested Island");
-			MFRRegistry.registerRubberTreeBiome("Green Hills");
+			//MFRRegistry.registerRubberTreeBiome("Green Hills");
 			MFRRegistry.registerRubberTreeBiome("Green Swamplands");
 			MFRRegistry.registerRubberTreeBiome("Mini Jungle");
-			MFRRegistry.registerRubberTreeBiome("Mountain Taiga");
-			MFRRegistry.registerRubberTreeBiome("Pine Forest");
+			//MFRRegistry.registerRubberTreeBiome("Mountain Taiga");
+			//MFRRegistry.registerRubberTreeBiome("Pine Forest");
 			MFRRegistry.registerRubberTreeBiome("Rainforest");
 			MFRRegistry.registerRubberTreeBiome("Redwood Forest");
 			MFRRegistry.registerRubberTreeBiome("Lush Redwoods");
-			MFRRegistry.registerRubberTreeBiome("Snow Forest");
-			MFRRegistry.registerRubberTreeBiome("Snowy Rainforest");
+			//MFRRegistry.registerRubberTreeBiome("Snow Forest");
+			//MFRRegistry.registerRubberTreeBiome("Snowy Rainforest");
 			MFRRegistry.registerRubberTreeBiome("Temperate Rainforest");
-			MFRRegistry.registerRubberTreeBiome("Woodlands");
+			//MFRRegistry.registerRubberTreeBiome("Woodlands");
 		} catch (Throwable $) {
 			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
 			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);

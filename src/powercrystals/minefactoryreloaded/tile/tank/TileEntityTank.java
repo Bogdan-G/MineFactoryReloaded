@@ -81,7 +81,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 				continue;
 			TileEntityTank tank = BlockPosition.getAdjacentTileEntity(this, to, TileEntityTank.class);
 			if (tank != null && tank.grid != null && FluidHelper.isFluidEqualOrNull(tank.grid.getStorage().getFluid(), _tank.getFluid())) {
-				if (tank.grid != null)
+				//if (tank.grid != null)
 					if (tank.grid == grid || tank.grid.addNode(this)) {
 						tank.join(to.getOpposite());
 						join(to);

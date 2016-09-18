@@ -25,7 +25,7 @@ public class RandomizerAnalog extends StatelessCircuit
 	{
 		if(_rand == null)
 		{
-			_rand = new Random(worldTime);
+			_rand = new org.bogdang.modifications.random.XSTR(worldTime);
 		}
 		
 		if(inputValues[1] - inputValues[0] <= 0)

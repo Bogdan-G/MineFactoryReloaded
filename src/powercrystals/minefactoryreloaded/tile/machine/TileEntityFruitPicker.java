@@ -37,7 +37,7 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 
 		super(Machine.FruitPicker);
 		createHAM(this, 1);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		setManageSolids(true);
 		setCanRotate(true);
 	}

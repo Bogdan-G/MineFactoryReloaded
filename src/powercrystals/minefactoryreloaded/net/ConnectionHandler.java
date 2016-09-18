@@ -23,6 +23,7 @@ public class ConnectionHandler
 
 	private static LinkedHashSet<IDelayedValidate> nodes = new LinkedHashSet<IDelayedValidate>();
 	private static LinkedHashSet<IDelayedValidate> nodesToAdd = new LinkedHashSet<IDelayedValidate>();
+	private static boolean one_time = true;
 
 	public static void update(IDelayedValidate node)
 	{
@@ -37,11 +38,11 @@ public class ConnectionHandler
 		{
 			if (nodesToAdd.isEmpty())
 				break l;
-			synchronized(nodesToAdd)
-			{
+			//synchronized(nodesToAdd)
+			//{
 				nodes.addAll(nodesToAdd);
 				nodesToAdd.clear();
-			}
+			//}
 			for(IDelayedValidate n : nodes)
 				if (!n.isNotValid())
 					n.firstTick();
@@ -71,9 +72,10 @@ public class ConnectionHandler
 
 	@SubscribeEvent
 	public void onItemPickUp(ItemPickupEvent evt) {
-		if (evt.pickedUp.getEntityItem().getItem() == MFRThings.rubberWoodItem) {
+		if (one_time && evt.pickedUp.getEntityItem().getItem() == MFRThings.rubberWoodItem) {
 			// TODO: give player a book
 			evt.player.triggerAchievement(AchievementList.mineWood);
+			one_time = false;//the player gets to achieve only 1 time
 		}
 	}
 }

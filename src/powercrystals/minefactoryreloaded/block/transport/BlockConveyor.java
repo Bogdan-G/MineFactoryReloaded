@@ -108,12 +108,12 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ITi
 
 		if (tile instanceof TileEntityConveyor) {
 			float f = 0.1F;
-			Random rand = new Random();
-			double d0 = x + rand.nextDouble() * (getBlockBoundsMaxX() - getBlockBoundsMinX() - (f * 2.0F)) + f +
+			Random rand = new org.bogdang.modifications.random.XSTR();
+			double d0 = x + rand.nextFloat() * (getBlockBoundsMaxX() - getBlockBoundsMinX() - (f * 2.0F)) + f +
 					getBlockBoundsMinX();
-			double d1 = y + rand.nextDouble() * (getBlockBoundsMaxY() - getBlockBoundsMinY() - (f * 2.0F)) + f +
+			double d1 = y + rand.nextFloat() * (getBlockBoundsMaxY() - getBlockBoundsMinY() - (f * 2.0F)) + f +
 					getBlockBoundsMinY();
-			double d2 = z + rand.nextDouble() * (getBlockBoundsMaxZ() - getBlockBoundsMinZ() - (f * 2.0F)) + f +
+			double d2 = z + rand.nextFloat() * (getBlockBoundsMaxZ() - getBlockBoundsMinZ() - (f * 2.0F)) + f +
 					getBlockBoundsMinZ();
 
 			switch (target.sideHit) {

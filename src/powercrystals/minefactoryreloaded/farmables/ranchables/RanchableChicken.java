@@ -16,7 +16,7 @@ import powercrystals.minefactoryreloaded.api.RanchedItem;
 
 public class RanchableChicken implements IFactoryRanchable {
 
-	protected Random rand = new Random();
+	protected Random rand = new org.bogdang.modifications.random.XSTR();
 
 	@Override
 	public Class<? extends EntityLivingBase> getRanchableEntity() {

@@ -72,7 +72,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered implements ITa
 		_settings.putAll(DEFAULT_SETTINGS);
 		_immutableSettings = java.util.Collections.unmodifiableMap(_settings);
 
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		setCanRotate(true);
 
 		skip = MFRConfig.harvesterSkip.getBoolean(false);

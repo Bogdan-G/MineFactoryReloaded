@@ -33,8 +33,7 @@ public class WorldGenRubberTree extends WorldGenerator {
 		for (int c = 0; c < retries; c++) {
 			int y = BlockHelper.getSurfaceBlockY(world, x, z);
 
-			if (y > 0 && !growTree(world, rand, x, y + 1, z))
-				retries--;
+			if (y > 0 && !growTree(world, rand, x, y + 1, z)) retries--;
 
 			x += rand.nextInt(16) - 8;
 			z += rand.nextInt(16) - 8;

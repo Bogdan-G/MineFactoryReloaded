@@ -54,10 +54,10 @@ public class GuiHarvester extends GuiUpgradeable {
 		} else if (button.id == 2) {
 			Packets.sendToServer(Packets.HarvesterButton, _tileEntity,
 				"harvestSmallMushrooms", getNewSettingValue("harvestSmallMushrooms"));
-		} else if (button.id == 3) {
+		}// else if (button.id == 3) {
 			//PacketDispatcher.sendPacketToServer(PacketWrapper.createPacket(MineFactoryReloadedCore.modNetworkChannel, Packets.HarvesterButton,
 			//		new Object[] { _harvester.xCoord, _harvester.yCoord, _harvester.zCoord, "", getNewSettingValue("") }));
-		}
+		//}
 	}
 
 	private String getSettingText(String setting) {

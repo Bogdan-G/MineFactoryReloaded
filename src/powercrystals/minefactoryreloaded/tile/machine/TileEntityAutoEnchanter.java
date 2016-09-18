@@ -35,7 +35,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered implements
 	public TileEntityAutoEnchanter()
 	{
 		super(Machine.AutoEnchanter);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 
 		_targetLevel = 30;
 		setManageSolids(true);

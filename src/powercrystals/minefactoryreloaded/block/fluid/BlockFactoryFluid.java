@@ -166,7 +166,7 @@ public class BlockFactoryFluid extends BlockFluidCoFHBase implements IRedNetDeco
 						int j = EntityXPOrb.getXPSplit(i);
 						i -= j;
 						world.spawnEntityInWorld(new EntityXPOrb(world,
-								x + rand.nextDouble(), y + rand.nextDouble(), z + rand.nextDouble(), j));
+								x + rand.nextFloat(), y + rand.nextFloat(), z + rand.nextFloat(), j));
 					}
 					fizz(world, x, y, z, rand);
 					return;
@@ -215,7 +215,7 @@ public class BlockFactoryFluid extends BlockFluidCoFHBase implements IRedNetDeco
 			"random.fizz", 0.5F, 2.6F + (rand.nextFloat() - rand.nextFloat()) * 0.8F);
 		for (int l = 0; l < 8; ++l) {
 			world.spawnParticle("largesmoke",
-				x + rand.nextDouble(), y + rand.nextDouble(), z + rand.nextDouble(),
+				x + rand.nextFloat(), y + rand.nextFloat(), z + rand.nextFloat(),
 				0.0D, 0.0D, 0.0D);
 		}
 	}

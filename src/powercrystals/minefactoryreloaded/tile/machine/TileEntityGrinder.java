@@ -45,7 +45,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered implements ITank
 	{
 		super(machine);
 		createEntityHAM(this);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 		setManageSolids(true);
 		setCanRotate(true);
 		_tanks[0].setLock(FluidRegistry.getFluid("mobessence"));

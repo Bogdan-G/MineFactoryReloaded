@@ -108,7 +108,7 @@ public class EntityFishingRod extends EntityThrowable {
 							EntityItem e = new EntityItem(worldObj, x, y, z);
 							e.motionX = rand.nextGaussian() / 2;
 							e.motionZ = rand.nextGaussian() / 2;
-							e.motionY = 0.4 + (rand.nextDouble() - 0.4) / 2;
+							e.motionY = 0.4 + (rand.nextFloat() - 0.4) / 2;
 							ItemStack stack = FishingHooks.getRandomFishable(rand, 1), s;
 							if (rand.nextInt(30) == 0 && (s = FurnaceRecipes.smelting().getSmeltingResult(stack)) != null) {
 								stack = s;

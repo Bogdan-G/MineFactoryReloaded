@@ -30,7 +30,7 @@ public class GrindingDamage extends DamageSource {
 		setDamageBypassesArmor();
 		setDamageAllowedInCreativeMode();
 		_msgCount = Math.max(deathMessages, 1);
-		_rand = new Random();
+		_rand = new org.bogdang.modifications.random.XSTR();
 	}
 
 	@Override

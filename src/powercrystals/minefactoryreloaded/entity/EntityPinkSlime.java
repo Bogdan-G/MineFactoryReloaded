@@ -44,9 +44,9 @@ public class EntityPinkSlime extends EntitySlime
 			{
 				ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, worldObj.rand.nextInt(12) + size);
 				EntityItem e = new EntityItem(worldObj, posX, posY, posZ, meats);
-				e.motionX = rand.nextDouble() - 0.5D;
-				e.motionY = rand.nextDouble() - 0.5D;
-				e.motionZ = rand.nextDouble() - 0.5D;
+				e.motionX = rand.nextFloat() - 0.5D;
+				e.motionY = rand.nextFloat() - 0.5D;
+				e.motionZ = rand.nextFloat() - 0.5D;
 				worldObj.spawnEntityInWorld(e);
 			}
 		}
