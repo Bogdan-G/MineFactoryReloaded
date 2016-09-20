@@ -132,7 +132,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 					//float var13 = rand.nextFloat() * 2.0f * PI;
 					float msin = (float)Math.sin(rand.nextFloat() * 2.0f * PI);
 					int var15 = MathHelper.floor_float(var11 * msin + basePos[0] + var9);
-					int var16 = MathHelper.floor_float(var11 * (float)Math.sqrt(1 - msin) + basePos[2] + var9);
+					int var16 = MathHelper.floor_float(var11 * (float)Math.sqrt(1 - msin*msin) + basePos[2] + var9);
 					int[] var17 = new int[] { var15, var3, var16 };
 					int[] var18 = new int[] { var15, var3 + leafDistanceLimit, var16 };
 
